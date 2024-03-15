@@ -16,3 +16,9 @@ vim.keymap.set('n', '<leader>q', '<CMD>q<CR>')
 
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
+
+vim.keymap.set('n', '<leader>tn', '<cmd>tab split<CR>')
+vim.keymap.set('n', '<S-Tab>', '<cmd>tabnext<CR>')
+
+vim.keymap.set('v', '<Tab>', '>')
+vim.keymap.set('v', '<S-Tab>', '<')
