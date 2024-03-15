@@ -5,6 +5,13 @@ lsp_zero.on_attach(function(client, bufnr)
     lsp_zero.buffer_autoformat()
 end)
 
+lsp_zero.set_sign_icons({
+    error = '✘',
+    warn = '▲',
+    hint = '⚑',
+    info = '»'
+})
+
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {

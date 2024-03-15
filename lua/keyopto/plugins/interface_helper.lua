@@ -34,5 +34,12 @@ return ({
         dependencies = {
             { 'MunifTanjim/nui.nvim' }
         }
-    }
+    },
+
+    {
+        "Shatur/neovim-session-manager",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+    },
 })
