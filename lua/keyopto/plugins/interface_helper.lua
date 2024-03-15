@@ -5,7 +5,7 @@ return ({
         "folke/which-key.nvim",
         event = "VeryLazy",
         init = function()
-            vim.o.timeout = true
+            vim.o.timeout = false
             vim.o.timeoutlen = 300
         end,
         opts = {
@@ -21,19 +21,18 @@ return ({
         { 'akinsho/toggleterm.nvim', version = "*", config = true }
     },
 
+    -- command line
     {
-        "folke/noice.nvim",
-        event = "VeryLazy",
-        opts = {
-            -- add any options here
-        },
+        'VonHeikemen/fine-cmdline.nvim',
         dependencies = {
-            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-            "MunifTanjim/nui.nvim",
-            -- OPTIONAL:
-            --   `nvim-notify` is only needed, if you want to use the notification view.
-            --   If not available, we use `mini` as the fallback
-            "rcarriga/nvim-notify",
+            { 'MunifTanjim/nui.nvim' }
+        }
+    },
+
+    {
+        'VonHeikemen/searchbox.nvim',
+        dependencies = {
+            { 'MunifTanjim/nui.nvim' }
         }
     }
 })

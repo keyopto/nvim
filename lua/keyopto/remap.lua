@@ -9,11 +9,10 @@ vim.keymap.set('n', '<A-j>', [[<Cmd>wincmd j<CR>]])
 vim.keymap.set('n', '<A-k>', [[<Cmd>wincmd k<CR>]])
 vim.keymap.set('n', '<A-l>', [[<Cmd>wincmd l<CR>]])
 
-vim.keymap.set('n', '<leader>vs', "<CMD>vsplit<CR>")
-vim.keymap.set('n', '<leader>hs', "<CMD>split<CR>")
+vim.keymap.set('n', '<leader>sv', "<CMD>vsplit<CR>")
+vim.keymap.set('n', '<leader>sh', "<CMD>split<CR>")
 
 vim.keymap.set('n', '<leader>q', '<CMD>q<CR>')
 
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
-

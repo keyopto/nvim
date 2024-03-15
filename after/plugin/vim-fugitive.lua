@@ -1,2 +1,5 @@
 vim.keymap.set("n", "<C-g>s", vim.cmd.Git)
 vim.keymap.set("n", "<C-g>d", vim.cmd.Gvdiff)
+vim.keymap.set("n", "<C-g>g", '<cmd>Git log --oneline --all --graph<CR>', { noremap = true })
+vim.keymap.set("n", "<C-g>a", vim.cmd.Gwrite)
+vim.keymap.set("n", "<C-g>c", '<cmd>Git commit<CR>')
