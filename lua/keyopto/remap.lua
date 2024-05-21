@@ -22,3 +22,5 @@ vim.keymap.set('n', '<S-Tab>', '<cmd>tabnext<CR>')
 
 vim.keymap.set('v', '<Tab>', '>')
 vim.keymap.set('v', '<S-Tab>', '<')
+
+vim.keymap.set('n', '<leader>wt', '<cmd>set wrap!<CR>')
