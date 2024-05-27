@@ -1,15 +1,43 @@
-local lsp_zero = require('lsp-zero')
+local cmp = require("cmp")
+local luasnip = require("luasnip")
+-- local lspkind = require("lspkind")
 
-lsp_zero.on_attach(function(client, bufnr)
-    lsp_zero.default_keymaps({ buffer = bufnr })
-    lsp_zero.buffer_autoformat()
-end)
+-- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
+require("luasnip.loaders.from_vscode").lazy_load()
 
-lsp_zero.set_sign_icons({
-    error = '✘',
-    warn = '▲',
-    hint = '⚑',
-    info = '»'
+cmp.setup({
+    completion = {
+    completeopt = "menu,menuone,preview,noselect",
+  },
+  snippet = { -- configure how nvim-cmp interacts with snippet engine
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+    ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
+    ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+  }),
+  -- sources for autocompletion
+  sources = cmp.config.sources({
+    { name = "nvim_lsp"},
+    { name = "luasnip" }, -- snippets
+    { name = "buffer" }, -- text within current buffer
+    { name = "path" }, -- file system paths
+  }),
+
+  -- configure lspkind for vs-code like pictograms in completion menu
+  -- formatting = {
+  --   format = lspkind.cmp_format({
+  --     maxwidth = 50,
+  --     ellipsis_char = "...",
+  --   }),
+  -- },
 })
 
 require('mason').setup({})
@@ -17,40 +45,35 @@ require('mason-lspconfig').setup({
     ensure_installed = {
         'rust_analyzer',
         'lua_ls',
-    },
-    handlers = {
-        lsp_zero.default_setup,
+        'tsserver',
     },
 })
 
-require('luasnip.loaders.from_vscode').lazy_load()
+local on_attach = function(_, _)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {})
 
-local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, {})
+    vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, {})
+    vim.keymap.set('n', 'K',  vim.lsp.buf.hover, {})
+end
 
-cmp.setup({
-    sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    },
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end
-    },
-    mapping = cmp.mapping.preset.insert({
-        -- `Enter` key to confirm completion
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-        -- Ctrl+Space to trigger completion menu
-        ['<C-Space>'] = cmp.mapping.complete(),
+require("lspconfig").tsserver.setup {
+    on_attach = on_attach,
+    capabilities = capabilities
+}
 
-        -- Navigate between snippet placeholder
-        ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-        ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+require("lspconfig").lua_ls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities
+}
 
-        -- Scroll up and down in the completion documentation
-        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-d>'] = cmp.mapping.scroll_docs(4),
-    })
-})
+local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
