@@ -27,9 +27,6 @@ return ({
   -- { 'saadparwaiz1/cmp_luasnip' },
   { 'L3MON4D3/LuaSnip' },
 
-  -- add commentary easily
-  { 'tpope/vim-commentary' },
-
   -- see the changes that have been made during time
   { 'mbbill/undotree' },
 
