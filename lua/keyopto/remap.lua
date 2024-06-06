@@ -37,6 +37,8 @@ vim.keymap.set("v", "<leader>y", "\"+y")
 vim.keymap.set("n", "<leader>d", "\"_d")
 vim.keymap.set("v", "<leader>d", "\"_d")
 
-vim.keymap.set("n", "<leader>od", ":lua vim.diagnostic.open_float(nil, {focus=false, scope='cursor'})<CR>")
+vim.keymap.set("n", "<leader>od", function() vim.diagnostic.open_float(nil, { focus = false, scope = 'cursor' }) end)
 
 vim.keymap.set("n", "<leader>ih", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
+
+vim.keymap.set("v", "<leader>fw", '\"ny/<C-R>n')
