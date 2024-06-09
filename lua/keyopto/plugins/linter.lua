@@ -1,5 +1,5 @@
-return ({
-    {
-        'mfussenegger/nvim-lint'
-    },
-})
+return {
+	{
+		"mfussenegger/nvim-lint",
+	},
+}

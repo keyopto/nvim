@@ -1,14 +1,16 @@
-local luasnip = require('luasnip')
-local snippet = luasnip.snippet;
-local textNode = luasnip.text_node;
-local insertNode = luasnip.insert_node;
-local extras = require('luasnip.extras')
+local luasnip = require("luasnip")
+local snippet = luasnip.snippet
+local textNode = luasnip.text_node
+local insertNode = luasnip.insert_node
+local extras = require("luasnip.extras")
 local rep = extras.rep
-local fmt = require('luasnip.extras.fmt').fmt
+local fmt = require("luasnip.extras.fmt").fmt
 
-luasnip.add_snippets('all', {
-    snippet('react',
-        fmt([[
+luasnip.add_snippets("all", {
+	snippet(
+		"react",
+		fmt(
+			[[
             import React from 'react';
 
             interface {name}Props {{
@@ -20,10 +22,13 @@ luasnip.add_snippets('all', {
             }}) => {{
                 return </>;
             }}
-        ]], {
-            name = insertNode(1, "ComponentName")
-        }, {
-            repeat_duplicates = true
-        })
-    ),
+        ]],
+			{
+				name = insertNode(1, "ComponentName"),
+			},
+			{
+				repeat_duplicates = true,
+			}
+		)
+	),
 })
