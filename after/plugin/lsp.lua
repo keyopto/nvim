@@ -98,6 +98,11 @@ require("mason-lspconfig").setup({
 				settings = {
 					Lua = {
 						callSnipet = "Replace",
+						workspace = {
+							library = {
+								["/usr/share/awesome/lib"] = true,
+							},
+						},
 					},
 				},
 			})
