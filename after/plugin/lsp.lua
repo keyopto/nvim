@@ -47,6 +47,11 @@ cmp.setup({
 local lspconfig = require("lspconfig")
 local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+local function is_angular_project()
+	local project_root = vim.fn.getcwd()
+	return vim.fn.filereadable(project_root .. "/angular.json") == 1
+end
+
 require("mason").setup({})
 require("mason-lspconfig").setup({
 	ensure_installed = {
@@ -54,6 +59,7 @@ require("mason-lspconfig").setup({
 		"lua_ls",
 		"tsserver",
 		"jdtls",
+		"angularls",
 	},
 	handlers = {
 		function(server)
@@ -84,6 +90,13 @@ require("mason-lspconfig").setup({
 					},
 				},
 			})
+		end,
+		["angularls"] = function()
+			if is_angular_project() then
+				lspconfig.angularls.setup({
+					filetypes = { "typescript", "html" },
+				})
+			end
 		end,
 		["lua_ls"] = function()
 			lspconfig.lua_ls.setup({
