@@ -47,3 +47,12 @@ vim.keymap.set("n", "<leader>ih", function()
 end)
 
 vim.keymap.set("v", "<leader>fw", '"ny/<C-R>n')
+
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+vim.keymap.set("n", "<leader>gp", vim.diagnostic.goto_prev, {})
+vim.keymap.set("n", "<leader>gn", vim.diagnostic.goto_next, {})
+vim.keymap.set("n", "K", vim.lsp.buf.hover, {})

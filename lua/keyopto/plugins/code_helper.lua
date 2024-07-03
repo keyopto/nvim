@@ -2,6 +2,7 @@ return {
 	-- lsp
 	{ "williamboman/mason.nvim" },
 	{ "williamboman/mason-lspconfig.nvim" },
+	{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
 	{ "neovim/nvim-lspconfig" },
 
 	{
@@ -16,6 +17,8 @@ return {
 			"L3MON4D3/LuaSnip",
 		},
 	},
+
+	{ "mfussenegger/nvim-jdtls", ft = "java" },
 
 	{
 		"stevearc/conform.nvim",

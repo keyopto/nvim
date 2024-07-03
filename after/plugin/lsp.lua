@@ -7,6 +7,8 @@ local luasnip = require("luasnip")
 -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
 require("luasnip.loaders.from_vscode").lazy_load()
 
+vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, {})
+
 cmp.setup({
 	completion = {
 		completeopt = "menu,menuone,preview,noselect",
@@ -42,16 +44,6 @@ cmp.setup({
 	-- },
 })
 
-local on_attach = function(_, _)
-	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
-	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-	vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, {})
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-end
-
 local lspconfig = require("lspconfig")
 local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -61,18 +53,20 @@ require("mason-lspconfig").setup({
 		"rust_analyzer",
 		"lua_ls",
 		"tsserver",
+		"jdtls",
 	},
 	handlers = {
 		function(server)
+			if server == "jdtls" then
+				return
+			end
 			lspconfig[server].setup({
 				capabilities = lsp_capabilities,
-				on_attach = on_attach,
 			})
 		end,
 		["tsserver"] = function()
 			lspconfig.tsserver.setup({
 				capabilities = lsp_capabilities,
-				on_attach = on_attach,
 				settings = {
 					completions = {
 						completeFunctionCalls = true,
@@ -94,7 +88,6 @@ require("mason-lspconfig").setup({
 		["lua_ls"] = function()
 			lspconfig.lua_ls.setup({
 				capabilities = lsp_capabilities,
-				on_attach = on_attach,
 				settings = {
 					Lua = {
 						callSnipet = "Replace",
@@ -107,6 +100,13 @@ require("mason-lspconfig").setup({
 				},
 			})
 		end,
+	},
+})
+
+require("mason-tool-installer").setup({
+	ensure_installed = {
+		"java-debug-adapter",
+		"java-test",
 	},
 })
 
