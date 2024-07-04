@@ -38,4 +38,7 @@ return {
 	-- git functionnalities
 	{ "tpope/vim-fugitive" },
 	{ "lewis6991/gitsigns.nvim" },
+
+	--indent-line
+	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 }
