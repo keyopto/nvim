@@ -94,7 +94,12 @@ require("mason-lspconfig").setup({
 		["angularls"] = function()
 			if is_angular_project() then
 				lspconfig.angularls.setup({
+					capabilities = lsp_capabilities,
 					filetypes = { "typescript", "html" },
+					on_attach = function(client)
+						-- else there are problems with tsserver
+						client.server_capabilities.renameProvider = false
+					end,
 				})
 			end
 		end,
