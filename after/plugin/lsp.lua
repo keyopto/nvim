@@ -60,6 +60,7 @@ require("mason-lspconfig").setup({
 		"tsserver",
 		"jdtls",
 		"angularls",
+		"gopls",
 	},
 	handlers = {
 		function(server)

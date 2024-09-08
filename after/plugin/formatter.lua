@@ -4,6 +4,7 @@ require("conform").setup({
 		typescript = { { "prettierd", "prettier" } },
 		typescriptreact = { { "prettierd", "prettier" } },
 		lua = { { "stylua" } },
+		go = { { "gofumpt" } },
 	},
 	format_on_save = {
 		-- These options will be passed to conform.format()
