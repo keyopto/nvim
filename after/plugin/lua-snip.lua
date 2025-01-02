@@ -9,16 +9,40 @@ luasnip.add_snippets("all", {
 		"react-component",
 		fmt(
 			[[
-            import React from 'react';
+	           import React from 'react';
 
-            const {name} : React.FC<{{}}> = ({{
+	           const {name} : React.FC<{{}}> = ({{
 
-            }}) => {{
-                return <div></div>;
-            }}
+	           }}) => {{
+	               return <div></div>;
+	           }}
 
-            export default {name};
-        ]],
+	           export default {name};
+	       ]],
+			{
+				name = insertNode(1, "ComponentName"),
+			},
+			{
+				repeat_duplicates = true,
+			}
+		)
+	),
+	snippet(
+		"react-native-component",
+		fmt(
+			[[
+	           import React from 'react';
+
+	           export type {name}Props = {{}};
+
+	           const {name} : React.FC<{name}Props> = ({{
+
+	           }}) => {{
+	               return null;
+	           }}
+
+	           export default {name};
+	       ]],
 			{
 				name = insertNode(1, "ComponentName"),
 			},
