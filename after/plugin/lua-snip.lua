@@ -34,7 +34,7 @@ luasnip.add_snippets("all", {
 	           import React from 'react';
 
 	           export type {name}Props = {{
-                __placeholder: never;
+                __placeholder?: never;
              }};
 
 	           const {name} : React.FC<{name}Props> = ({{
@@ -60,7 +60,7 @@ luasnip.add_snippets("all", {
 	           import React from 'react';
 
 	           export type {name}ScreenParams = {{
-                __placeholder: never;
+                __placeholder?: never;
              }};
 
 	           const {name} = () => {{
