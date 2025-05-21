@@ -8,6 +8,7 @@ local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load()
 
 vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, {})
+vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations, {})
 
 cmp.setup({
   completion = {
@@ -54,6 +55,7 @@ end
 
 require("mason").setup({})
 require("mason-lspconfig").setup({
+  automatic_installation = true,
   ensure_installed = {
     "rust_analyzer",
     "lua_ls",
@@ -61,6 +63,7 @@ require("mason-lspconfig").setup({
     "jdtls",
     "angularls",
     "gopls",
+    "clangd",
   },
   handlers = {
     function(server)
@@ -69,6 +72,15 @@ require("mason-lspconfig").setup({
       end
       lspconfig[server].setup({
         capabilities = lsp_capabilities,
+        inlayHints = {
+          includeInlayEnumMemberValueHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayVariableTypeHints = false,
+        }
       })
     end,
     ["ts_ls"] = function()
@@ -106,17 +118,30 @@ require("mason-lspconfig").setup({
     end,
     ["lua_ls"] = function()
       lspconfig.lua_ls.setup({
-        capabilities = lsp_capabilities,
         settings = {
           Lua = {
-            callSnipet = "Replace",
-            workspace = {
-              library = {
-                ["/usr/share/awesome/lib"] = true,
-              },
-            },
-          },
+            hint = { enable = true },             -- Enable hints in Lua
+            diagnostics = { globals = { "vim" } } -- Prevent 'vim' undefined warnings
+          }
+        }
+      })
+    end,
+    ["clangd"] = function()
+      lspconfig.clangd.setup({
+        capabilities = lsp_capabilities,
+        init_options = {
+          clangdFileStatus = true,
+          fallbackFlags = { "-Wall", "-Wextra", "-Wpedantic" }
         },
+        inlayHints = {
+          includeInlayEnumMemberValueHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
+          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayVariableTypeHints = false,
+        }
       })
     end,
   },
