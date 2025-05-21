@@ -4,9 +4,9 @@ local insertNode = luasnip.insert_node
 local extras = require("luasnip.extras")
 local fmt = require("luasnip.extras.fmt").fmt
 
-luasnip.add_snippets("all", {
+luasnip.add_snippets("typescriptreact", {
   snippet(
-    "react-component",
+    "component",
     fmt(
       [[
 	           import React from 'react';
@@ -28,7 +28,7 @@ luasnip.add_snippets("all", {
     )
   ),
   snippet(
-    "react-native-component",
+    "native-component",
     fmt(
       [[
 	           import React from 'react';
@@ -54,7 +54,7 @@ luasnip.add_snippets("all", {
     )
   ),
   snippet(
-    "react-native-screen",
+    "native-screen",
     fmt(
       [[
 	           import React from 'react';

@@ -6,7 +6,7 @@ require("conform").setup({
     typescriptreact = { "prettierd", "prettier", stop_after_first = true },
     lua = { "stylua" },
     go = { "gofumpt" },
-    java = { "google-java-format" },
+    -- java = { "google-java-format" },
     xml = { "xmlformatter" },
   },
   format_on_save = {

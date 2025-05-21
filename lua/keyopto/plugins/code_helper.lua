@@ -20,7 +20,7 @@ return {
     },
   },
 
-  { "mfussenegger/nvim-jdtls",             ft = "java" },
+  { 'nvim-java/nvim-java' },
 
   {
     "stevearc/conform.nvim",

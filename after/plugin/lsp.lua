@@ -2,6 +2,7 @@ require("neodev").setup({})
 
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+require('java').setup()
 -- local lspkind = require("lspkind")
 
 -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
@@ -30,7 +31,18 @@ cmp.setup({
   }),
   -- sources for autocompletion
   sources = cmp.config.sources({
-    { name = "nvim_lsp" },
+    {
+      name = "nvim_lsp",
+      entry_filter = function(entry, ctx)
+        local item = entry:get_completion_item()
+
+        -- Remove the 'class' snippet for Java filetype only
+        if ctx.filetype == "java" and item.kind == 15 and (item.label == "class" or item.label == "interface") then
+          return false
+        end
+        return true
+      end,
+    },
     { name = "luasnip" }, -- snippets
     { name = "buffer" },  -- text within current buffer
     { name = "path" },    -- file system paths
@@ -67,9 +79,6 @@ require("mason-lspconfig").setup({
   },
   handlers = {
     function(server)
-      if server == "jdtls" then
-        return
-      end
       lspconfig[server].setup({
         capabilities = lsp_capabilities,
         inlayHints = {
