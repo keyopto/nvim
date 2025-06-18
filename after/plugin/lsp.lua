@@ -2,7 +2,11 @@ require("neodev").setup({})
 
 local cmp = require("cmp")
 local luasnip = require("luasnip")
-require('java').setup()
+require('java').setup({
+  jdk = {
+    automatic_installation = false
+  }
+})
 -- local lspkind = require("lspkind")
 
 -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
